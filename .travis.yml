@@ -1,0 +1,14 @@
+language: objective-c
+before_install:
+  - brew update
+install:
+  - mkdir -p $(brew --repo)/Library/Taps/travis
+  - ln -s $PWD $(brew --repo)/Library/Taps/travis/homebrew-testtap
+  - brew tap --repair
+env:
+  - PACKAGE=abc
+script:
+  - brew install -v $install_opt $TRAVIS_REPO_SLUG/$PACKAGE
+  - brew postinstall $TRAVIS_REPO_SLUG/$PACKAGE
+  - brew test $TRAVIS_REPO_SLUG/$PACKAGE
+  - abc version
